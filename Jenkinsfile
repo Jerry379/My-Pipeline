@@ -23,7 +23,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 retry(3) {
-                    sh './jenkins/flakey-deploy.sh'
+                    sh 'echo 执行3次'
                 }
 
                 timeout(time:3, unit:'MINUTES') {
