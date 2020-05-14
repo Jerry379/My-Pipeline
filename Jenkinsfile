@@ -20,5 +20,36 @@ pipeline {
                 '''
             }
         }
+        stage('Deploy') {
+            retry(3) {
+                sh './jenkins/flakey-deploy.sh'
+            }
+
+            timeout(time:3, unit:'MINUTES') {
+                echo ' 脚本要在3分钟之内执行完'
+            }
+
+            timeout(time:3, unit:'MINUTES') {
+                echo '重复执行5次，总共用时不超过3分钟'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'this will always run'
+        }
+        success {
+            echo 'this will run only if successful'
+        }
+        failure {
+            echo 'this will run only if failed'
+        }
+        unstable {
+            echo 'this will run only if the run was marked'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
     }
 }
