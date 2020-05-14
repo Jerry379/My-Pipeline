@@ -29,8 +29,6 @@ pipeline {
                 timeout(time:3, unit:'MINUTES') {
                     echo ' 脚本要在3分钟之内执行完'
                 }
-            }
-            steps {
                 timeout(time:3, unit:'MINUTES') {
                     echo '重复执行5次，总共用时不超过3分钟'
                 }
