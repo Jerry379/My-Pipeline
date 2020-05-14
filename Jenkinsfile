@@ -10,6 +10,10 @@
 // }
 pipeline {
     agent any
+    environment {
+        DISABLE_AUTH = 'true'
+        DB_ENGINE    = 'sqlite'
+    }
     stages {
         stage('Build') {
             steps {
@@ -43,7 +47,9 @@ pipeline {
             echo 'this will run only if successful'
         }
         failure {
-            echo 'this will run only if failed'
+            mail to: 'ruijie379@163.com',
+                subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                body: "Something is wrong with ${env.BUILD_URL}"
         }
         unstable {
             echo 'this will run only if the run was marked'
