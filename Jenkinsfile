@@ -21,16 +21,19 @@ pipeline {
             }
         }
         stage('Deploy') {
-            retry(3) {
-                sh './jenkins/flakey-deploy.sh'
-            }
+            steps {
+                retry(3) {
+                    sh './jenkins/flakey-deploy.sh'
+                }
 
-            timeout(time:3, unit:'MINUTES') {
-                echo ' 脚本要在3分钟之内执行完'
+                timeout(time:3, unit:'MINUTES') {
+                    echo ' 脚本要在3分钟之内执行完'
+                }
             }
-
-            timeout(time:3, unit:'MINUTES') {
-                echo '重复执行5次，总共用时不超过3分钟'
+            steps {
+                timeout(time:3, unit:'MINUTES') {
+                    echo '重复执行5次，总共用时不超过3分钟'
+                }
             }
         }
     }
